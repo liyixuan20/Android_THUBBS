@@ -40,4 +40,22 @@
     <string name="ID_NUMBER">身份证号</string>
     <string name="CANNOT_BE_NULL">该项不能为空</string>
 
+
+    <string name="DEFAULT">默认</string>
+    <string name="BIAOTI">标题</string>
+    <string name="NEIRONG">内容</string>
+    <string name="YONGHU">用户</string>
+    <string name="LEIXING">类型</string>
+    <string name="TUPIAN">图片</string>
+    <string name="DAOSHI">导师</string>
+    <string name="XUESHENG">学生</string>
+    <string name="draft_button">draft_button</string>
+    <string name="title_activity_visit">visit</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="DELETE">删除</string>
+
 </resources>

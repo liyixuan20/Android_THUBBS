@@ -21,4 +21,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/login/', views.loginfunc),
     path('user/signup/', views.signupfunc),
+    path('user/blacklist/', views.user_blacklist),
+    path('user/follow/', views.user_follow),
+    path('user/follows/', views.user_follows),
+    path('user/followeds/', views.user_followeds),
+    path('user/change_password/', views.change_password),
+    path('user/avatar/',views.change_avatar),
 ]

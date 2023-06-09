@@ -7,7 +7,7 @@ from sqlalchemy import Column,String,Integer
 
 
 
-engine = create_engine(f'mysql+pymysql://{"root"}:{""}@{"82.157.198.223"}/{"RXX_BBS"}')
+engine = create_engine(f'mysql+pymysql://{"root"}:{""}@{"82.157.198.223"}/{"BBS"}')
 
 Base = automap_base()
 Base.prepare(engine, reflect=True)
