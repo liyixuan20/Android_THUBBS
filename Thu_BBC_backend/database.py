@@ -16,7 +16,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 # print(Base.classes.keys())
-bases = declarative_base(engine)
+#bases = declarative_base(engine)
 
 if __name__ == '__main__':
     connection = engine.connect()

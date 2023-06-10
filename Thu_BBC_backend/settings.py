@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'Thu_BBC_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'RXX_BBC',
+        'NAME': 'BBS',
         'USER': 'root',
         'PASSWORD': '',
         'HOST' : '82.157.198.223',

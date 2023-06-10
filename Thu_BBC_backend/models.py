@@ -1,4 +1,4 @@
-from database import Base, SessionLocal, bases
+from .database import Base, SessionLocal
 from datetime import datetime
 from sqlalchemy import Column,String,Integer, DateTime
 
@@ -13,6 +13,7 @@ Operator = Base.classes.Operator
 Message = Base.classes.Message
 Class = Base.classes.Class
 Draft = Base.classes.Draft
+Food = Base.classes.Food
 
 
 

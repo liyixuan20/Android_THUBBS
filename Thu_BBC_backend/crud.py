@@ -1,7 +1,7 @@
-from models import *
+from .models import *
 from django.contrib.auth.models import User
 import os
-from models import *
+from .models import *
 import random
 import threading
 import datetime
@@ -27,7 +27,10 @@ def change_user_pwd(user):
     user.save()
     print("Password changed successfully.")
 
+def get_user(user_id):
+    user = session.query(Users).filter(Users.id == user_id).one_or_none()
 
+    return user
 
 
 
