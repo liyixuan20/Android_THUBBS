@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?android:attr/windowBackground"
+        app:navigationIcon="@drawable/ic_navigate_before_black_24dp">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/toolbar"
+        android:background="?android:attr/listDivider" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_below="@id/divider3">
+
+        <com.stfalcon.chatkit.messages.MessagesList
+            android:id="@+id/messagesList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:dateHeaderFormat="dd MMMM yyyy"
+            app:incomingDefaultBubbleColor="@color/ivory"
+            app:incomingDefaultBubblePressedColor="@color/ivory_dark"
+            app:incomingDefaultBubbleSelectedColor="@color/gray"
+            app:incomingDefaultImageOverlayPressedColor="@color/black_10"
+            app:incomingDefaultImageOverlaySelectedColor="@color/gray_transparent"
+            app:incomingTextColor="@color/black"
+            app:incomingTextLinkColor="@color/green"
+            app:incomingTextSize="16sp"
+            app:outcomingDefaultBubbleColor="@color/green"
+            app:outcomingDefaultBubblePressedColor="@color/green_dark"
+            app:outcomingDefaultBubbleSelectedColor="@color/gray_dark_transparent"
+            app:outcomingDefaultImageOverlayPressedColor="@color/black_10"
+            app:outcomingDefaultImageOverlaySelectedColor="@color/gray_transparent"
+            app:outcomingTextColor="@color/white"
+            app:outcomingTextLinkColor="@color/brown"
+            app:outcomingTextSize="16sp"
+            app:textAutoLink="all" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>

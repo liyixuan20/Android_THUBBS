@@ -48,4 +48,6 @@ urlpatterns = [
     path('get_doc/',views.get_doc),
     path('operator/edit/', views.edit_operator),
     path('operator/search/', views.index_search),
+    path('user/get/home/', views.get_user_home),
+    path('user/get/detail/', views.get_user_detail),
 ]

@@ -1,5 +1,7 @@
 package com.example.bbs_frontend.fragment.chat;
 
+import static com.example.bbs_frontend.util.Global.SERVER_URL;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -106,7 +108,7 @@ public class ChatFragment extends Fragment implements DateFormatter.Formatter {
                         for (int i = 0; i < 4; i++) {
                             //chats.add(getDialog(i, post_list.get(i).time));
                             ArrayList<User> users1 = new ArrayList<>();
-                            User user1 = new User(post_list.get(i).id, post_list.get(i).sender, "http://101.43.128.148:9999/pic/notice.jpg", true);
+                            User user1 = new User(post_list.get(i).id, post_list.get(i).sender, SERVER_URL+"/pic/notice.jpg", true);
                             users1.add(user1);
                             Calendar cal = Calendar.getInstance();
                             cal.set(post_list.get(i).year,post_list.get(i).mon-1,post_list.get(i).day,

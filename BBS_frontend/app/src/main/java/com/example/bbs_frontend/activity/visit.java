@@ -13,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.example.androidapp.R;
-import com.example.androidapp.adapter.HomepagePagerAdapter;
-import com.example.androidapp.util.Global;
-import com.example.androidapp.util.HomeDetail;
-import com.example.androidapp.util.visit_detail;
+import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.adapter.HomepagePagerAdapter;
+import com.example.bbs_frontend.util.Global;
+import com.example.bbs_frontend.util.HomeDetail;
+import com.example.bbs_frontend.util.visit_detail;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

@@ -12,19 +12,20 @@ import requests,json
 import ahocorasick
 session = SessionLocal()
 
-def create_profile(user_id, username, password, nickname):
+def create_profile(user_id, username, user_password, nickname):
+    print("create one user")
     pro = session.query(Users).filter(Users.id == user_id).one_or_none()
     if pro != None:
         return -2
-    pf = Users(id=user_id, account= username, password = password, nickname = nickname)
+    pf = Users(id=user_id, account= username, password = user_password, nickname = nickname)
     session.add(pf)
     session.commit()
     return 0
 
 def change_user_pwd(user):
-    user = User.objects.get(username=user.account)
-    user.set_password(user.password)
-    user.save()
+    user_ = User.objects.get(username=user.account)
+    user_.set_password(user.password)
+    user_.save()
     print("Password changed successfully.")
 
 def get_user(user_id):

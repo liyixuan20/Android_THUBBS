@@ -32,48 +32,50 @@ filtertree = []
 myserver = 'http://82.157.198.223'
 
 def signupfunc(request):
+    print("call signupfunc")
     res = {}
     if request.method == 'POST':
         username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
+        user_password = request.POST.get('password', '')
         nickname = request.POST.get('name', '')
+        intro = request.POST.get('intro','')
         res['message'] = 'signing up'
-        try:
-            user = User.objects.create_user(username = username, password = password)
-            res['id'] = user.id
-            create_profile(user.id, username, password, nickname)
-            
-            message = Message(send_id = "notice_follow", receive_id = user.id, content = "欢迎!")
-            session.add(message)
-            message1 = Message(send_id = "notice_like", receive_id = user.id, content = "欢迎!")
-            session.add(message1)
-            message2 = Message(send_id = "notice_upgrade", receive_id = user.id, content = "欢迎!")
-            session.add(message2)
-            message3 = Message(send_id = "notice_comment", receive_id = user.id, content = "欢迎!")
-            session.add(message3)
-            session.commit()
+        
+        user = User.objects.create_user(username = username, password = user_password)
+        
+        user_ = Users(id = str(user.id),nickname = nickname,account = username,email = username,school = intro,password = user_password)
+        res['id'] = user_.id
+        session.add(user_)
+        session.commit()
+        
 
-        except Exception as e:
-            res['message'] = e
-        finally:
-            if res['message'] == "signing up":
-                res['type'] = 'ok'
-                return JsonResponse(res,safe=False)
-            else:
-                res['type'] = 'nok'
-                return JsonResponse(res,safe=False)  
-
+        session.execute(Message.__table__.insert().values(send_id="notice_follow",receive_id=res['id'],content="欢迎!"))
+        session.execute(Message.__table__.insert().values(send_id = "notice_like", receive_id = res['id'], content = "欢迎!"))
+        session.execute(Message.__table__.insert().values(send_id = "notice_upgrade", receive_id = res['id'], content = "欢迎!"))
+        session.execute(Message.__table__.insert().values(send_id = "notice_comment", receive_id = res['id'], content = "欢迎!"))
+        session.commit()
+        print("sign up message")
+        return JsonResponse({'type': 1})
+    
 
 
 def loginfunc(request):
+    print("call login")
     password = request.POST.get('password', '')
     username = request.POST.get('username', '')
     user = authenticate(username=username, password=password)
     res = {}
+    accounts = session.query(Users).filter(Users.account == username).all()
     if user is not None:
         login(request, user)
-        res['type'] = 'ok'
-        res['message'] = '登陆成功'
+    for account in accounts:
+        if account.password == password:
+            res['message'] = account.id
+            res['type'] = 'ok'
+        else:
+            res['type'] = 'nok'
+            res['message'] = "密码错误"
+        print("login successful")
         return JsonResponse(res, safe=False)
     res['type'] = 'nok'
     res['message'] = "账号不存在"
@@ -95,14 +97,15 @@ def get_user_ava(id):
     return user.profile
 def get_user_nickname(id):
     user = session.query(Users).filter(Users.id == id).one_or_none()
+    if user == None:
+        return None
     return user.nickname
 
-#头像文件路径 username + 'pic/' + name
-
+#头像文件路径 'pic/' + name
 def change_avatar(request):
     myfile = request.FILES.get('image','')
     user_id = request.POST.get('user_id','')
-    user = session.query(Users).filter(Users.id == id).one_or_none()
+    user = session.query(Users).filter(Users.id == user_id).one_or_none()
     if myfile:
         dir = "pic/" + myfile.name
         w = open(dir,'wb+')
@@ -122,12 +125,14 @@ def user_blacklist(request):
     black_id = request.POST.get('black_id', '')
     print(black_id)
     flag = session.query(Operator).filter(Operator.type ==5,Operator.user_id ==user_id, Operator.reply_id==black_id ).all()
-    if flag == None or flag != []:  # 操作记录不存在
+    if flag == None or flag == []:  # 操作记录不存在
         op = Operator(reply_id = black_id, user_id = user_id,type = 5)
         session.add(op)
+        session.commit()
     else:
         op = session.query(Operator).filter(Operator.type == 5, Operator.user_id==user_id, Operator.reply_id==black_id)
         op.delete()
+        session.commit()
     session.commit()
     return JsonResponse("success!", safe=False)
     
@@ -136,7 +141,7 @@ def user_follow(request):
     black_id = request.POST.get('follow_id', '')
     print(black_id)
     flag = Operator.objects.filter(type=6).filter(user_id=user_id).filter(reply_id=black_id).count()
-    if flag == None or flag != []:  # 操作记录不存在
+    if flag == None or flag == []:  # 操作记录不存在
         op = Operator(reply_id = black_id, user_id = user_id,type = 6)
         session.add(op)
         session.commit()
@@ -161,7 +166,7 @@ def user_follows(request):
         item["ava"] = user.profile
         item["user_id"] = user.id
         item["name"] = user.nickname
-        follow = session.query(Operator).filter(Operator.type == 6, Operator.user_id == user_id, Operator.reply_id == user_id).one_or_none()
+        follow = session.query(Operator).filter(Operator.type == 6, Operator.user_id == user_id, Operator.reply_id == user.id).one_or_none()
         if follow:
             item["follow"] = "已关注"
         else:
@@ -182,7 +187,7 @@ def user_followeds(request):
         item["ava"] = user.profile
         item["user_id"] = user.id
         item["name"] = user.nickname
-        follow = session.query(Operator).filter(Operator.type == 6, Operator.user_id == user_id, Operator.reply_id == user_id).one_or_none()
+        follow = session.query(Operator).filter(Operator.type == 6, Operator.user_id == user_id, Operator.reply_id == user.id).one_or_none()
         if follow:
             item["follow"] = "已关注"
         else:
@@ -200,7 +205,7 @@ def edit_user(request):
         user.nickname = nickname
     if wechat_id !='':
         user.wechat_id = wechat_id
-    session.commit
+    session.commit()
     return JsonResponse("success!", safe=False)
 
 def get_user_detail(request):
@@ -236,6 +241,8 @@ def get_user_home(request):
     black = len(session.query(Operator).filter(Operator.type == 5, Operator.reply_id == id, Operator.user_id == user_id).all()) + len(session.query(Operator).filter(Operator.type == 5, Operator.reply_id == user_id, Operator.user_id == id).all())
     user = session.query(Users).filter(Users.id == id).one_or_none()
     res = {}
+    if(user == None):
+        print("user is none")
     res["account"] = user.email
     res["name"] = user.nickname
     res["ava"] = user.profile
@@ -938,8 +945,7 @@ def get_message_index(request):
     id = request.POST.get('id', '')
     res = []
     users = []
-
-    receives = Message.objects.filter(receive_id=id).order_by("-time").filter(receiver_del=0)
+    receives = session.query(Message).filter(Message.receive_id==id).order_by(asc(Message.time)).filter(Message.receiver_del == 0).all()
     
     for message in receives:
         if message.send_id not in users:
@@ -953,17 +959,18 @@ def get_message_index(request):
             item["day"] = message.time.day
             item["hour"] = message.time.hour
             item["min"] = int(message.time.strftime("%M"))
-            item['num'] = Message.objects.filter(receive_id=id).filter(send_id=message.send_id).filter(looked=0).count()
+            item['num'] = len(session.query(Message).filter(Message.receive_id==id, Message.send_id==message.send_id, Message.looked == 0).all())
             res.append(item)
         else:
             continue
+    print(res)
     return JsonResponse(res,safe=False)
 
 def get_message_detail(request):
     user_id = request.POST.get('user_id', '')
     id = request.POST.get('id', '')
     res = []
-    msgs = Message.objects.filter(send_id=id).filter(receive_id=user_id).order_by("-time").filter(sender_del=0)
+    msgs = session.query(Message).filter(Message.send_id==id, Message.receive_id==user_id, Message.sender_del == 0).order_by(asc(Message.time)).all()
     
     for message in msgs:
         message.looked = 1
@@ -986,27 +993,32 @@ def send_message(request):
     message = Message()
     message.send_id = send_id
     message.receive_id = receive_id
-    flag = Operator.objects.filter(type=5).filter(user_id=receive_id).filter(reply_id=send_id).count() + Operator.objects.filter(type=5).filter(user_id=send_id).filter(reply_id=receive_id).count()
+    session.add(message)
+    session.commit()
+    flag = len(session.query(Operator).filter(Operator.type == 5, Operator.user_id == receive_id, Operator.reply_id == send_id).all()) + len(session.query(Operator).filter(Operator.type == 5, Operator.user_id == send_id, Operator.reply_id == receive_id).all())
+    #flag = Operator.objects.filter(type=5).filter(user_id=receive_id).filter(reply_id=send_id).count() + Operator.objects.filter(type=5).filter(user_id=send_id).filter(reply_id=receive_id).count()
     if flag == 0:
         message.content = content
     else:
         message.content = ""
         message.receiver_del = 1
     message.looked = 0
-    message.save()
+    session.commit()
     return JsonResponse("success!", safe=False)
 
 def delete_message(request):
     user_id = request.POST.get('user_id', '')
     id = request.POST.get('id', '')
-    sends = Message.objects.filter(send_id=user_id).filter(receive_id=id).filter(sender_del=0)
-    receives = Message.objects.filter(send_id=id).filter(receive_id=user_id).filter(receiver_del=0)
+    sends = session.query(Message).filter(Message.send_id == user_id, Message.receive_id == id, Message.sender_del == 0)
+    receives = session.query(Message).filter(Message.send_id == id, Message.receive_id == user_id, Message.sender_del == 0)
+    #sends = Message.objects.filter(send_id=user_id).filter(receive_id=id).filter(sender_del=0)
+    #receives = Message.objects.filter(send_id=id).filter(receive_id=user_id).filter(receiver_del=0)
     for send in sends:
         send.sender_del = 1
-        send.save()
+        session.commit()
     for receive in receives:
         receive.receiver_del = 1
-        receive.save()
+        session.commit()
     return JsonResponse("success!", safe=False)
 #----------------------敏感词过滤----------------------
 def build_actree(wordlist):
