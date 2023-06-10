@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orderArray">
+        <item>@string/BIAOTI</item>
+        <item>@string/NEIRONG</item>
+        <item>@string/YONGHU</item>
+        <item>@string/LEIXING</item>
+    </string-array>
+    <string-array name="view_types_dialog">
+        <item name="image">@string/TUPIAN</item>
+    </string-array>
+
+    <string-array name="t_s_type">
+        <item name="teacher">@string/DAOSHI</item>
+        <item name="student">@string/XUESHENG</item>
+    </string-array>
+
+</resources>

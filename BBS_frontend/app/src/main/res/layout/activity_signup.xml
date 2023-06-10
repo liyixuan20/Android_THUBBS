@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:paddingTop="?attr/actionBarSize">
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_keyboard_arrow_left_white_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content" />
+
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/logon1_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_username_box"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:hint="用户名"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/gray_light"
+            app:emptyErrorString="@string/CANNOT_BE_NULL" />
+
+
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/logon1_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_username_box"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="10dp"
+            android:hint="@string/PASSWORD"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"
+            app:emptyErrorString="@string/CANNOT_BE_NULL" />
+
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/logon1_repeat_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_username_box"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="10dp"
+            android:hint="@string/REPEAT_PASSWORD"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"
+            app:emptyErrorString="@string/CANNOT_BE_NULL" />
+
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/logon2_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_username_box"
+            android:drawableStart="@drawable/png_black_24dp_name"
+            android:drawablePadding="10dp"
+            android:hint="@string/NAME"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"
+            app:emptyErrorString="@string/CANNOT_BE_NULL" />
+
+
+        <Button
+            android:id="@+id/logon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?attr/loginButtonBackground"
+            android:onClick="btn"
+            android:padding="15dp"
+            android:shadowColor="@android:color/holo_blue_light"
+            android:text="@string/LOGON"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

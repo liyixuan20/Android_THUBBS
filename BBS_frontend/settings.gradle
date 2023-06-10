@@ -1,0 +1,3 @@
+
+rootProject.name = "BBS_frontend"
+include ':app'
