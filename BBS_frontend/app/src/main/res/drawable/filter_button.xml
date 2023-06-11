@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#80B4E0" /> <!-- 淡蓝色背景颜色 -->
+    <corners android:radius="8dp" /> <!-- 圆角半径，可以根据需要进行调整 -->
+</shape>

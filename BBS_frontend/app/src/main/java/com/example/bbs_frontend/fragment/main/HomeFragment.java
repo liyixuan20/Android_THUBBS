@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
     private String temp,t1,t2;
     private String responseData;
     private TextView text,all,attention,time,thumbs;
+    private Button pull_post;
     private Gson gson;
     private String host = Global.SERVER_URL;
     private Switch attention_switch,order_switch;
@@ -85,6 +87,7 @@ public class HomeFragment extends Fragment {
         spinner = root.findViewById(R.id.orderSpinner);
         attention_switch = root.findViewById(R.id.switch_button);
         order_switch = root.findViewById(R.id.order_button);
+        pull_post = root.findViewById(R.id.post_button);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(RecyclerView.VERTICAL);
         recycleView.setLayoutManager(manager);
@@ -124,6 +127,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 refresh();
+            }
+        });
+
+        pull_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), PublicActivity.class);
+                startActivity(intent);
             }
         });
 

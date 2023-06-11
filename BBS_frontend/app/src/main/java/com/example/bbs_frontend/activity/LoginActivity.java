@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity{
                                     .add("username",account);
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder()
-                                    .url(Global.SERVER_URL + "/user/loginfunc/")
+                                    .url(Global.SERVER_URL + "/user/login/")
                                     .post(builder.build())
                                     .build();
                             Response response = client.newCall(request).execute();

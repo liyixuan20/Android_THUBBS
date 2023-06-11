@@ -21,17 +21,20 @@
 
         <ImageView
             android:id="@+id/imageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:clickable="true"
-            android:padding="5dp"
-            android:src="@drawable/ic_add"
+            android:padding="3sp"
+            android:src="@drawable/logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
         <EditText
             android:id="@+id/search_view"
@@ -51,12 +54,14 @@
             android:id="@+id/selectText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/filter_button"
             android:clickable="true"
             android:text="筛选"
-            android:textSize="20dp"
             android:textColor="@color/blue"
-            android:background="@drawable/line1"
-            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:paddingHorizontal="4sp"
+            android:paddingBottom="4sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -146,7 +151,18 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <Button
+        android:id="@+id/post_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击发布动态"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/filter_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"

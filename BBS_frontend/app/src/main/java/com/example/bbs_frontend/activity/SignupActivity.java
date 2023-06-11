@@ -135,7 +135,7 @@ public class SignupActivity extends BaseActivity {
                                     .add("username",account);
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder()
-                                    .url(Global.SERVER_URL + "/user/signupfunc/")
+                                    .url(Global.SERVER_URL + "/user/signup/")
                                     .post(builder.build())
                                     .build();
                             Response response = client.newCall(request).execute();

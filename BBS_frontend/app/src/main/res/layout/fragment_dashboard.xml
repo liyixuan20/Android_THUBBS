@@ -170,21 +170,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="个人信息/动态"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/line"/>
 
         <Button
             android:id = "@+id/btn3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="修改密码"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:background="@drawable/line"/>
 
         <Button
             android:id="@+id/btn4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="修改信息"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/line"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

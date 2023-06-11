@@ -156,7 +156,7 @@ public class Tools {
 
     public static void showGlide(Context context, ImageView view, String url) {
         RequestOptions options = new RequestOptions()
-                .error(R.mipmap.ic_add)
+                .error(R.mipmap.plus)
                 .transform(new GlideRoundTransform(context,5));
         Glide.with(context)
                 .load(url)
