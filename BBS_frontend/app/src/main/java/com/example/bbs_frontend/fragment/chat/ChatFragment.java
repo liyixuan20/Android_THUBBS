@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.androidapp.R;
-import com.example.androidapp.activity.ChatActivity;
-import com.example.androidapp.entity.chat.Dialog;
-import com.example.androidapp.entity.chat.Message;
-import com.example.androidapp.entity.chat.User;
-import com.example.androidapp.util.DateUtil3;
-import com.example.androidapp.util.Global;
-import com.example.androidapp.util.message_index;
+import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.activity.ChatActivity;
+import com.example.bbs_frontend.entity.chat.Dialog;
+import com.example.bbs_frontend.entity.chat.Message;
+import com.example.bbs_frontend.entity.chat.User;
+import com.example.bbs_frontend.util.DateUtil3;
+import com.example.bbs_frontend.util.Global;
+import com.example.bbs_frontend.util.message_index;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;

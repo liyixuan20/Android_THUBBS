@@ -1,14 +1,5 @@
 <resources>
-    <string name="app_name">BBS_frontend</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="app_name">大作业</string>
     <string name="title_home">首页</string>
     <string name="title_dashboard">我的</string>
     <string name="title_notifications">通知</string>
@@ -38,8 +29,43 @@
     <string name="DEPARTMENT">院系</string>
     <string name="TS_NUMBER">工号/学号</string>
     <string name="ID_NUMBER">身份证号</string>
-    <string name="CANNOT_BE_NULL">该项不能为空</string>
 
+    <string name="WATCH">关注</string>
+    <string name="STOP_WATCH">取消关注</string>
+
+    <string name="HOT_SEARCH">热门搜索</string>
+    <string name="HISTORY_SEARCH">搜索历史</string>
+
+    <string name="TEST">测试</string>
+    <string name="tab_1">These are the top stories:</string>
+
+    <string name="INFO">通知</string>
+    <string name="CHAT">会话</string>
+    <string name="INFO_LIST">通知列表</string>
+    <string name="CHAT_LIST">会话列表</string>
+    <string name="ALL_READ">全标已读</string>
+
+    <string name="PERSONAL_INFO">个人信息</string>
+    <string name="RECRUITMENT">招生意向</string>
+    <string name="APPLICATION">申请意向</string>
+    <string name="CANNOT_BE_NULL">该项不能为空</string>
+    <string name="TUTOR">导师</string>
+    <string name="STUDENT">学生</string>
+
+    <string name="FOLLOWER">粉丝</string>
+    <string name="ORDER">排序</string>
+
+
+    <string name="error_gif">x or y bound size should be at least %1$dpx and file size should be no more than %2$sM</string>
+    <string name="BACK">返回</string>
+    <string name="PUBLISH">发布动态</string>
+    <string name="PUBCONFIRM">发布</string>
+    <string name="TITLETIP">起个好标题吧~</string>
+    <string name="CONTENTTIP">想分享的事儿</string>
+    <string name="SENDPOV">发送位置</string>
+    <string name="SENDMUSIC">上传音乐</string>
+    <string name="SENDVIDEO">上传视频</string>
+    <string name="DRAFT">草稿箱</string>
 
     <string name="DEFAULT">默认</string>
     <string name="BIAOTI">标题</string>
@@ -57,5 +83,13 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="DELETE">删除</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="CHANGE_AVATAR">修改头像</string>
+    <string name="title">你的标题</string>
+    <string name="summary">想发布的内容</string>
 
 </resources>

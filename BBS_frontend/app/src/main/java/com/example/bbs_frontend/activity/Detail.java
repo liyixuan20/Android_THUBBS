@@ -28,6 +28,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.adapter.HomeAdapter;
+import com.example.bbs_frontend.adapter.ImageAdapter;
 import com.example.bbs_frontend.adapter.PostAdapter;
 import com.example.bbs_frontend.adapter.UserListAdapter;
 import com.example.bbs_frontend.util.Global;

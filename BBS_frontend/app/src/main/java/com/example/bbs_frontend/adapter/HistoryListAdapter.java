@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.bbs_frontend.R;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 

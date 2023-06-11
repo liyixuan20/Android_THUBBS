@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.androidapp.R;
-import com.example.androidapp.util.HomeDetail;
+import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.util.HomeDetail;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

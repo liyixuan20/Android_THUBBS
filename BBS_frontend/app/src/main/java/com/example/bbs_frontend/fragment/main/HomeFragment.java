@@ -23,11 +23,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.R;
-import com.example.androidapp.activity.PublicActivity;
-import com.example.androidapp.adapter.HomeAdapter;
-import com.example.androidapp.util.Global;
-import com.example.androidapp.util.PostDetail;
+import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.activity.PublicActivity;
+import com.example.bbs_frontend.adapter.HomeAdapter;
+import com.example.bbs_frontend.util.Global;
+import com.example.bbs_frontend.util.PostDetail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

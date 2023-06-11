@@ -18,9 +18,6 @@ import java.util.List;
  * Title:RecyclerView适配器基类
  * Description:
  * <p>
- * Created by pei
- * Modified by Yezhen Cong
- * Date: 2017/12/29
  */
 public abstract class MyBaseListAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
 

@@ -4,7 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background"
     android:paddingTop="?attr/actionBarSize">
 
     <Button
@@ -103,10 +103,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="?attr/loginButtonBackground"
+            android:background="@drawable/shape_login_button"
             android:onClick="btn"
             android:padding="15dp"
-            android:shadowColor="@android:color/holo_blue_light"
+            android:shadowColor="@android:color/transparent"
             android:text="@string/LOGON"
             android:textSize="16sp" />
 

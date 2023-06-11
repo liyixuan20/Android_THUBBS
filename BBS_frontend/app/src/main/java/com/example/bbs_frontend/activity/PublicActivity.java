@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ThemedSpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,17 +25,37 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+
+
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Callback;
+
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.bbs_frontend.R;
+import com.example.bbs_frontend.adapter.SelectPlotAdapter;
 import com.example.bbs_frontend.util.Apis;
 import com.example.bbs_frontend.util.DraftDetail;
 import com.example.bbs_frontend.util.GlideEngine;
 import com.example.bbs_frontend.util.Global;
+import com.example.bbs_frontend.util.PostDetail;
 import com.example.bbs_frontend.util.PostId;
 import com.example.bbs_frontend.util.Tools;
-import com.example.bbs_frontend.adapter.SelectPlotAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.luck.picture.lib.PictureSelector;
@@ -45,19 +66,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class PublicActivity extends AppCompatActivity {
 

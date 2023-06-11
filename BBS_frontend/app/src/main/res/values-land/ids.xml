@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="draft_button" type="id">@id/draft_button</item>
+</resources>
