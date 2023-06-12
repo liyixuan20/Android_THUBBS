@@ -10,6 +10,7 @@ import os
 import base64
 import requests,json
 import ahocorasick
+import asyncio
 session = SessionLocal()
 
 def create_profile(user_id, username, user_password, nickname):

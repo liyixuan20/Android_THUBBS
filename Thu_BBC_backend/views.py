@@ -25,6 +25,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, JsonResponse,Http404, FileResponse
 import re
 import json
+import uuid
 
 img_server = './img/'
 filtertree = []
@@ -68,6 +69,8 @@ def loginfunc(request):
     accounts = session.query(Users).filter(Users.account == username).all()
     if user is not None:
         login(request, user)
+    else:
+        print("login fail")
     for account in accounts:
         if account.password == password:
             res['message'] = account.id
@@ -82,6 +85,7 @@ def loginfunc(request):
     return JsonResponse(res,safe=False)
 
 def change_password(request):
+    print("change_password")
     id = request.POST.get('id', '')
     password = request.POST.get('password', '')
     user = session.query(Users).filter(Users.id == id)
@@ -93,9 +97,11 @@ def change_password(request):
     return JsonResponse(res,safe=False)
 
 def get_user_ava(id):
+    print("get_user_ava")
     user = session.query(Users).filter(Users.id == id).one_or_none()
     return user.profile
 def get_user_nickname(id):
+    print("get_user_nickname")
     user = session.query(Users).filter(Users.id == id).one_or_none()
     if user == None:
         return None
@@ -127,6 +133,7 @@ def user_blacklist(request):
     flag = session.query(Operator).filter(Operator.type ==5,Operator.user_id ==user_id, Operator.reply_id==black_id ).all()
     if flag == None or flag == []:  # 操作记录不存在
         op = Operator(reply_id = black_id, user_id = user_id,type = 5)
+        op.id = uuid.uuid1()
         session.add(op)
         session.commit()
     else:
@@ -143,6 +150,7 @@ def user_follow(request):
     flag = Operator.objects.filter(type=6).filter(user_id=user_id).filter(reply_id=black_id).count()
     if flag == None or flag == []:  # 操作记录不存在
         op = Operator(reply_id = black_id, user_id = user_id,type = 6)
+        op.id = uuid.uuid1()
         session.add(op)
         session.commit()
         message = Message(send_id = "notice_follow", receive_id = black_id,content = get_user_nickname(user_id)+"关注了您！",looked = 0)
@@ -286,6 +294,7 @@ def edit_operator(request):
     user = get_user(user_id)
     if flag == 0: #操作记录不存在
         op = Operator()
+        op.id = uuid.uuid1()
         op.reply_id = id
         op.user_id = user_id
         op.type = type
@@ -312,6 +321,7 @@ def edit_operator(request):
                 if food.reports == 5 and food.hide == 0:
                     food.hide = 1
                     message = Message()
+                    message.id = uuid.uuid1()
                     message.send_id = "admin"
                     message.receive_id = food.author
                     message.content = "您的帖子 " + food.name + " 被举报过多，已被隐藏！"
@@ -328,7 +338,7 @@ def edit_operator(request):
                 message.receive_id = post.author
                 message.content = "“" + user.nickname + "”" + "点赞了您的作品<" + post.title +">"
                 message.looked = 0
-                session.add(message)
+                message.id = uuid.uuid1()
                 session.commit()
                 if user.task & 1 == 0:
                     user.task = user.task | 1
@@ -378,7 +388,7 @@ def edit_operator(request):
                     message.send_id = "admin"
                     message.receive_id = course.author
                     message.content = "您的帖子 " + course.name + " 被举报过多，已被隐藏！"
-                    session.add(message)
+                    message.id = uuid.uuid1()
                     session.commit()
             session.commit()
         elif reply_type == 4:
@@ -474,6 +484,8 @@ def index_search(request):
     attention = request.POST.get('attention', '')
     mine = request.POST.get('')
     search_tag = search.split(",")
+    print("index_search")
+    print(user_type, search, type, order, user_id, attention)
     res = []
     if order == "1":
         posts = session.query(Post).order_by(asc(Post.thumbs)).all()
@@ -558,6 +570,7 @@ def index_search(request):
     return JsonResponse(res, safe=False)
 #---------------------------草稿相关---------------------
 def new_draft(request):#新建草稿
+    print("new_draft")
     title = request.POST.get('title', '')
     content = request.POST.get('content', '')
     user_id = request.POST.get('user_id', '')
@@ -576,6 +589,8 @@ def new_draft(request):#新建草稿
                 draft.image = img_server+pic_id+'.png'
             else:
                 draft.image += (',' + img_server+pic_id+'.png')
+    print("new_draft:img created")
+    draft.id = uuid.uuid1()
     draft.title = check_word(title)
     draft.content = check_word(content)
     draft.author = user_id
@@ -586,24 +601,28 @@ def new_draft(request):#新建草稿
     for draft in drafts:
         item = {}
         item["id"] = draft.id
-        item["titie"] = draft.title
+        item["title"] = draft.title
         item["content"] = draft.content
         item["time"] = draft.time.strftime('%m-%d %H:%M')
         res.append(item)
-
+    print("draft:", res)
     return JsonResponse(res, safe=False)
 
 def get_draft(request):
+    print("get_draft")
+    print("\n")
+    print("\n")
     user_id = request.POST.get('user_id', '')
     res = []
     drafts = session.query(Draft).filter(Draft.author==user_id).order_by(asc(Draft.time)).all()
     for draft in drafts:
         item = {}
         item["id"] = draft.id
-        item["titie"] = draft.title
+        item["title"] = draft.title
         item["content"] = draft.content
         item["time"] = draft.time.strftime('%m-%d %H:%M')
         res.append(item)
+    print("drafts:" ,res)
     return JsonResponse(res, safe=False)
 
 def edit_draft(request):
@@ -621,7 +640,7 @@ def edit_draft(request):
     for draft in drafts:
         item = {}
         item["id"] = draft.id
-        item["titie"] = draft.title
+        item["title"] = draft.title
         item["content"] = draft.content
         item["time"] = draft.time.strftime('%m-%d %H:%M')
         res.append(item)
@@ -638,7 +657,7 @@ def delete_draft(request):
     for draft in drafts:
         item = {}
         item["id"] = draft.id
-        item["titie"] = draft.title
+        item["title"] = draft.title
         item["content"] = draft.content
         item["time"] = draft.time.strftime('%m-%d %H:%M')
         res.append(item)
@@ -892,6 +911,7 @@ def user_record(request):
 
 def post_reply(request):
     reply = Reply()
+    reply.id = uuid.uuid1()
     reply.reply_id = request.POST.get('reply_id', '')
     reply.content = check_word(request.POST.get('content', ''))
     reply.image = request.POST.get('image', '')
@@ -925,6 +945,7 @@ def post_reply(request):
     author.visit = author.visit + 10
     session.commit()
     message = Message()
+    message.id = uuid.uuid1()
     message.send_id = "notice_comment"
     message.receive_id = author.id
     message.content = "“" + user.nickname + "”" + "评论了您的作品<" + post.title +">"
@@ -942,11 +963,19 @@ def delete_reply(request):
 #-------------------------------------------分割线为以下消息相关
 
 def get_message_index(request):
+    """""
+    async def execute_query():
+        receives = session.query(Message).filter(Message.receive_id == id).order_by(asc(Message.time)).filter(Message.receiver_del == 0).all()
+        return receives
+    """""
+
     id = request.POST.get('id', '')
+    print("get_message_index")
+    print("get id:", id)
     res = []
     users = []
-    receives = session.query(Message).filter(Message.receive_id==id).order_by(asc(Message.time)).filter(Message.receiver_del == 0).all()
-    
+    receives = session.query(Message).filter(Message.receive_id == id).order_by(asc(Message.time)).filter(Message.receiver_del == 0).all()
+
     for message in receives:
         if message.send_id not in users:
             users.append(message.send_id)
@@ -963,6 +992,31 @@ def get_message_index(request):
             res.append(item)
         else:
             continue
+    """""
+
+    try:
+        loop = asyncio.get_event_loop()
+        receives = await loop.run_in_executor(None, execute_query)
+    
+        for message in receives:
+            if message.send_id not in users:
+                users.append(message.send_id)
+                item = {}
+                item["id"] = message.send_id
+                item["sender"] = get_user_nickname(message.send_id)
+                item["msg"] = message.content 
+                item["year"] = message.time.year
+                item["mon"] = message.time.month
+                item["day"] = message.time.day
+                item["hour"] = message.time.hour
+                item["min"] = int(message.time.strftime("%M"))
+                item['num'] = len(session.query(Message).filter(Message.receive_id==id, Message.send_id==message.send_id, Message.looked == 0).all())
+                res.append(item)
+            else:
+                continue
+    except Exception:
+        raise Http404
+    """
     print(res)
     return JsonResponse(res,safe=False)
 
@@ -991,10 +1045,10 @@ def send_message(request):
     receive_id = request.POST.get('receive_id', '')
     content = request.POST.get('content', '')
     message = Message()
+    message.id = uuid.uuid1()
     message.send_id = send_id
     message.receive_id = receive_id
     session.add(message)
-    session.commit()
     flag = len(session.query(Operator).filter(Operator.type == 5, Operator.user_id == receive_id, Operator.reply_id == send_id).all()) + len(session.query(Operator).filter(Operator.type == 5, Operator.user_id == send_id, Operator.reply_id == receive_id).all())
     #flag = Operator.objects.filter(type=5).filter(user_id=receive_id).filter(reply_id=send_id).count() + Operator.objects.filter(type=5).filter(user_id=send_id).filter(reply_id=receive_id).count()
     if flag == 0:
@@ -1020,6 +1074,233 @@ def delete_message(request):
         receive.receiver_del = 1
         session.commit()
     return JsonResponse("success!", safe=False)
+
+#-----------------------------------动态post操作-----------------------------
+
+#-------------------------------------------分割线以下为评事相关
+def get_post_index(request):
+    user_id = request.POST.get('user_id','')
+    tag = request.POST.get('tag', '')
+    if tag == '':
+        posts = session.query(Post).filter(Post.hide == 0).order_by(asc(Post.time)),all()
+        #posts = Post.objects.filter(hide=0).order_by("-time")
+    else:
+        posts = session.query(Post).filter(Post.tag==tag, Post.hide == 0).order_by(asc(Post.time)).all()      
+    List = []
+    i = 0
+    for post in posts:
+        item = {}
+        item["id"] = post.id
+        item["time"] = post.time.strftime('%m-%d %H:%M')
+        item["content"] = post.content
+        if post.image == None or post.image == "":
+            item["image"] = False
+            item["imagePath"] = ""
+        else:
+            temp = post.image.split(",")
+            item["image"] = True
+            item["imagePath"] = temp[0]
+        item["title"] = post.title
+        item["type"] = post.type
+        item["location"] = post.tag
+        author = post.author
+        user = get_user(author)
+        item["user_id"] = user.id
+        item["avatar"] = user.profile
+        item["dep"] = user.department
+        if item["dep"] == "" or item["dep"] == None:
+            item["dep"] = "未知"
+        item["sender"] = user.nickname
+        follow = session.query(Operator).filter(Operator.type == 6, Operator.user_id == user_id, Operator.reply_id == user.id).one_or_none()
+        #follow = Operator.objects.filter(type=6).filter(user_id=user_id).filter(reply_id=user.id)
+        if follow != None:
+            item["follow"] = "已关注"
+        else:
+            item["follow"] = "未关注"
+        List.append(item)
+    return JsonResponse(List,safe=False)
+
+def get_post_detail(request):
+    id = request.POST.get('id', '')
+    user_id = request.POST.get('user_id', '')
+    post = session.query(Post).filter(Post.id == id).one_or_none()
+    if post == None:
+        print("post is none")
+    else:
+        print('\n')
+        print("get_post_detail")
+        print("post", post)
+        print('\n')
+    res = {}
+    res["author"]=post.author
+    res["sendname"] = get_user_nickname(post.author)
+    res["date"] = post.time.strftime('%m-%d %H:%M')
+    res["ava"] = get_user_ava(post.author)
+    res["title"] = post.title
+    res["text"] = post.content
+    if post.image==None:
+        res["pic"] = []
+    else:
+        res["pic"] = post.image.split(",")
+    res["type"] = post.type
+    res["likes"] = post.thumbs
+    res["store"] = post.stores
+    res["reports"] = post.reports
+    res["location"] = post.tag
+    res["like"] = session.query(Operator).filter(Operator.type==1,Operator.user_id ==user_id,Operator.reply_id == id).count()
+    res["sto"] = session.query(Operator).filter(Operator.type==2,Operator.user_id ==user_id,Operator.reply_id == id).count()
+    res["reported"] = session.query(Operator).filter(Operator.type==4,Operator.user_id ==user_id,Operator.reply_id == id).count()
+    thumb_list = "点赞者:"
+    if res["likes"] == 0:
+      thumb_list += "无"
+    else:
+      peoples = session.query(Operator).filter(Operator.type==1,Operator.reply_id == id).all()
+      for people in peoples:
+        user = get_user(people.user_id)
+        thumb_list += user.nickname + " "
+    res["thumb_list"] = thumb_list
+    
+    #res["done"] = Reply.objects.filter(author=user_id).filter(reply_id=id).count()
+    #if res["done"] > 0:
+        #res["done"] = 1
+    #res["icons"] = post.icons
+    #res["money"] = post.money
+    #res["finished"] = post.done
+    response = []
+    users = []
+    tmp1 = []
+    second_replys = []
+    replys = session.query(Reply).filter(Reply.reply_id == id, Reply.hide == 0).all()
+
+    for reply in replys:
+        item = {}
+        item["id"] = reply.id
+        item["rank"] = 1
+        item["user_id"] = reply.author
+        
+        item["sendname"] = get_user_nickname(reply.author)
+        item["ava"] = get_user_ava(reply.author)
+        item["msg"] = reply.content
+        item["likes"] = reply.thumbs
+        item["reports"] = reply.reports
+        item["date"] = reply.time
+        item["like"] = session.query(Operator).filter(Operator.type==1,Operator.user_id==user_id,Operator.reply_id==reply.id).count()
+        item["reported"] = session.query(Operator).filter(Operator.type==4,Operator.user_id==user_id,Operator.reply_id==reply.id).count()
+        response.append(item)
+        if reply.author not in tmp1 and reply.author != res["author"]:
+          users.append(item)
+          tmp1.append(reply.author)
+        tmp = session.query(Reply).filter(Reply.reply_id==reply.id,Reply.hide==0).all()
+        for i in tmp:
+            second_replys.append(i)
+    
+    while second_replys != []:
+        next_replys = []
+        for second_reply in second_replys:
+            item = {}
+            item["id"] = second_reply.id
+            item["rank"] = 2
+            item["sendname"] = get_user_nickname(second_reply.author)
+            item["user_id"] = second_reply.author
+            tmp_id = session.query(Reply).filter(Reply.id==second_reply.reply_id).one_or_none()
+            item["recname"] = get_user_nickname(tmp_id.author)
+            item["ava"] = get_user_ava(second_reply.author)
+            item["msg"] = second_reply.content
+            item["likes"] = second_reply.thumbs
+            item["reports"] = second_reply.reports
+            item["date"] = second_reply.time
+            item["like"] = session.query(Operator).filter(Operator.type==1,Operator.user_id==user_id,Operator.reply_id==second_reply.id).count()
+            item["reported"] = session.query(Operator).filter(Operator.type==1,Operator.user_id==user_id,Operator.reply_id==second_reply.id).count()
+            response.append(item)
+            if second_reply.author not in tmp1 and second_reply.author != res["author"]:
+              users.append(item)
+              tmp1.append(second_reply.author)
+            tmp = session.query(Reply).filter(Reply.reply_id==second_reply.id,Reply.hide==0).all()
+            for i in tmp:
+                next_replys.append(i)
+        second_replys = next_replys
+    response = sorted(response, key=lambda keys: keys["date"])
+    for item in response:
+        item["date"] = item["date"].strftime('%m-%d %H:%M')
+    res["response"] = response
+    return JsonResponse(res, safe=False)
+
+
+def new_post(request):#新建帖子记录
+
+    title  = request.POST.get('title','')
+    myfile = request.FILES.get('image',)
+    content = request.POST.get('content', '')
+    user_id = request.POST.get('user_id', '')
+    post_id = request.POST.get('post_id','')
+    type = request.POST.get('type','')
+    location = request.POST.get('location','')
+    if post_id == "init":
+        post = Post()
+        post.id = uuid.uuid1()
+        post.content = check_word(content)
+        post.author = user_id
+        post.title = title
+        post.tag = location
+        post.type = type
+        if myfile:
+            dir = "pic/"  + myfile.name
+            w = open(dir,'wb+')
+            for chunk in myfile.chunks():   
+                w.write(chunk)
+            w.close()
+            post.image = (myserver + "/" + dir + ";")
+        session.add(post)
+        session.commit()
+        operators = session.query(Operator).filter(Operator.type==6,Operator.reply_id==user_id).all()
+        user = get_user(user_id)
+        for operator in operators:
+          message = Message()
+          message.send_id = "notice_upgrade"
+          message.receive_id = operator.user_id
+          message.content = "你关注的“" + user.nickname + "”" + "发表了作品<" + post.title +">"
+          message.looked = 0
+          message.id = uuid.uuid1()
+          session.add(message)
+          session.commit()
+        return JsonResponse({'id':post.id})
+    else:
+        post = session.query(Post).filter(Post.id==post_id).one_or_none()
+        if post == None:
+            print("post is none")
+            return JsonResponse({'id':''})
+        if myfile:
+            dir = "pic/" + myfile.name
+            w = open(dir,'wb+')
+            for chunk in myfile.chunks():   
+                w.write(chunk)
+            w.close()
+            post.image += (myserver + "/" + dir + ";")
+            post.save()
+
+        print("new_post end")
+        return JsonResponse({'id':post.id})
+    
+
+def finish_post(request):
+    post_id = request.POST.get('post_id', '')
+    user_id = request.POST.get('user_id', '')
+    post = session.query(Post).filter(Post.id==post_id).one_or_none()
+    if post == None:
+        print("fininsh_post: post is None" )
+    if get_user(user_id) == None:
+        return JsonResponse("Not Exist User!", safe=False)
+    user = get_user(user_id)
+    user.score = user.score + post.icons
+    session.commit()
+    if post.done == 0:
+        post.done = 1
+        session.commit()
+    else:
+        return JsonResponse("Post was done!", safe=False)
+    return JsonResponse("success!", safe=False)
+def good_post(request):
+    pass
 #----------------------敏感词过滤----------------------
 def build_actree(wordlist):
     actree = ahocorasick.Automaton()

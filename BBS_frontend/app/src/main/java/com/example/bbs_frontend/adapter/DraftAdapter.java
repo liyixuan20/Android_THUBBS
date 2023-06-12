@@ -67,7 +67,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.MyViewHolder
                 deletedraft(holder.getAdapterPosition());
                 Intent intent = new Intent(view.getContext(), PublicActivity.class);
                 intent.putExtra("draftcontent", tmp.content);
-                intent.putExtra("drafttitle", tmp.titie);
+                intent.putExtra("drafttitle", tmp.title);
                 view.getContext().startActivity(intent);
 
             }
@@ -102,7 +102,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.MyViewHolder
     }
 
     public void bindView(@NonNull MyViewHolder holder, int position){
-        holder.title.setText("<"+data.get(position).titie+">");
+        holder.title.setText("<"+data.get(position).title+">");
         holder.content.setText(data.get(position).content);
     }
 

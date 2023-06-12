@@ -31,7 +31,7 @@ import okhttp3.Response;
 public class DraftActivity extends AppCompatActivity {
     private DraftAdapter draftAdapter;
     private Unbinder unbinder;
-    private String host = "http://101.43.128.148:9999";
+    private String host = Global.SERVER_URL;
     private String responseData;
     private Gson gson;
     private List<DraftDetail> post_list;

@@ -50,4 +50,9 @@ urlpatterns = [
     path('operator/search/', views.index_search),
     path('user/get/home/', views.get_user_home),
     path('user/get/detail/', views.get_user_detail),
+    path('post/index/', views.get_post_index),
+    path('post/detail/', views.get_post_detail),
+    path('post/init/', views.new_post),
+    path('post/done/', views.finish_post),
+    path('post/good/', views.good_post),
 ]
